@@ -1,12 +1,22 @@
 package com.tommyotervik.groupfinder.demo.entity;
 
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -33,6 +43,16 @@ public class Student {
 	@Column(name="phonenumber")
 	private String phoneNumber;
 	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(
+			name="groupmemberships",
+			joinColumns=@JoinColumn(name="student_id"),
+			inverseJoinColumns=@JoinColumn(name="group_id")
+			)
+	private List<Student> groups;
+	
+	
 	// // TODO Idea. @Before Advice på getPassword() metoden i Student entity class. Legg den i global exception handler. 
 	// Set-metoden fungerer som vanlig, ignorerer Get-metoden. 
 	@JsonProperty(access = Access.WRITE_ONLY)
@@ -42,8 +62,7 @@ public class Student {
 	public Student() {
 		
 	}
-	
-	
+		
 	// FIKS PASSORD LATER
 	
 	public Student(String firstName, String lastName, String email, String phoneNumber, String password) {
@@ -53,8 +72,21 @@ public class Student {
 		this.phoneNumber = phoneNumber;
 		this.password = password;
 	}
+	
+	
+	
+	
 
 
+	
+
+	public List<Student> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Student> groups) {
+		this.groups = groups;
+	}
 
 	public int getId() {
 		return id;

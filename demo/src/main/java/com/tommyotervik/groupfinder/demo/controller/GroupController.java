@@ -40,7 +40,6 @@ public class GroupController {
 		
 		Group group = groupService.findById(groupId);
 		
-		// TODO Skift til GroupNotFoundException
 		if (group == null) {
 			throw new GroupNotFoundException("Group not found.");
 		}
@@ -74,7 +73,6 @@ public class GroupController {
 		
 		Group group = groupService.findById(groupId);
 		
-		// TODO group exception fiks
 		if (group== null) {
 			throw new GroupNotFoundException("Group not found.");
 		}

@@ -1,12 +1,19 @@
 package com.tommyotervik.groupfinder.demo.entity;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -43,6 +50,17 @@ public class Group {
 	@Column(name="time")
 	private String time;
 	
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinTable(
+			name="groupmemberships",
+			joinColumns=@JoinColumn(name="group_id"),
+			inverseJoinColumns=@JoinColumn(name="student_id")
+			)
+	private List<Student> students;
+	
+	
+	
+	
 	// TODO fiks, husk på at jeg har kommentert ut get/set for student
 	/*
 	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -63,6 +81,22 @@ public class Group {
 		this.location = location;
 		this.date = date;
 		this.time = time;
+	}
+	
+	
+	
+	
+	
+	
+
+
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
 	public int getId() {
