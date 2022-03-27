@@ -21,6 +21,17 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 	
+	// Exception handler method, CustomerErrorResponse = Type of the response body,     CustomerNotFoundException = Exception type to handle / catch
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handleException(GroupNotFoundException exception)  {
+		
+		ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage(), System.currentTimeMillis());
+		
+		// error = body, status code
+		
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
 	// add another exception handler to catch any exception (catch all)
 	
 	// global handler
