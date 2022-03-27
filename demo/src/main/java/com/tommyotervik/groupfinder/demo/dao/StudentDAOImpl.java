@@ -65,7 +65,7 @@ public class StudentDAOImpl implements StudentDAO {
 		
 		Session session = entityManager.unwrap(Session.class);
 		
-		Query query = session.createQuery("delete from Students where id=:studentId");
+		Query query = session.createQuery("delete from Student where id=:studentId");
 		
 		query.setParameter("studentId", id);
 		

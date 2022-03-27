@@ -7,11 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name="students")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Student {
 	
 	@Id
@@ -31,7 +33,7 @@ public class Student {
 	@Column(name="phonenumber")
 	private String phoneNumber;
 	
-	// FIKS DENNA LATER
+	// // TODO Idea. @Before Advice på getPassword() metoden i Student entity class. Legg den i global exception handler. 
 	// Set-metoden fungerer som vanlig, ignorerer Get-metoden. 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name="password")

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tommyotervik.groupfinder.demo.entity.Student;
+import com.tommyotervik.groupfinder.demo.exception.StudentNotFoundException;
 import com.tommyotervik.groupfinder.demo.service.StudentService;
 
 
@@ -37,7 +38,7 @@ public class StudentController {
 		Student student = studentService.findById(studentId);
 		
 		if (student == null) {
-			throw new RuntimeException("Employee id not found");
+			throw new StudentNotFoundException("Student not found.");
 		}
 		
 		return student;
@@ -70,7 +71,7 @@ public class StudentController {
 		Student student = studentService.findById(studentId);
 		
 		if (student == null) {
-			throw new RuntimeException("Employee id not found");
+			throw new StudentNotFoundException("Student not found.");
 		}
 		
 		studentService.deleteById(studentId);
