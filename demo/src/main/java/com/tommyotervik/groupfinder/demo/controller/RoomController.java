@@ -13,73 +13,75 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tommyotervik.groupfinder.demo.entity.Group;
+import com.tommyotervik.groupfinder.demo.entity.Room;
 import com.tommyotervik.groupfinder.demo.entity.Student;
 import com.tommyotervik.groupfinder.demo.exception.GroupNotFoundException;
 import com.tommyotervik.groupfinder.demo.exception.StudentNotFoundException;
 import com.tommyotervik.groupfinder.demo.service.GroupService;
+import com.tommyotervik.groupfinder.demo.service.RoomService;
 import com.tommyotervik.groupfinder.demo.service.StudentService;
 
 
 
 @RestController
 @RequestMapping("/api")
-public class GroupController {
+public class RoomController {
 	
 	// Studentservice dependancy injection
 	
 	@Autowired
-	private GroupService groupService;
+	private RoomService roomService;
 	
-	@GetMapping("/groups")
-	public List<Group> findAll() {
-		return groupService.findAll();
+	@GetMapping("/rooms")
+	public List<Room> findAll() {
+		return roomService.findAll();
 	}
 	
-	@GetMapping("/groups/{groupId}")
-	public Group getGroup(@PathVariable int groupId) {
+	@GetMapping("/rooms/{roomId}")
+	public Room getRoom(@PathVariable int roomId) {
 		
-		Group group = groupService.findById(groupId);
+		Room room = roomService.findById(roomId);
 		
-		if (group == null) {
+		if (room == null) {
 			throw new GroupNotFoundException("Group not found.");
 		}
 		
-		return group;
+		return room;
 	}
 	
-	@PostMapping("/groups")
-	public Group addGroup(@RequestBody Group group) {
+	@PostMapping("/rooms")
+	public Room addRoom(@RequestBody Room room) {
 		
 		// Just in case they pass in ID
 		// this is to force a save of a new item, instead of update
 		
-		group.setId(0);
+		room.setId(0);
 		
-		groupService.save(group);
+		roomService.save(room);
 		
-		return group;
+		return room;
 	}
 	
-	@PutMapping("/groups")
-	public Group updateGroup(@RequestBody Group group) {
+	@PutMapping("/rooms")
+	public Room updateRoom(@RequestBody Room room) {
 		
-		groupService.save(group);
+		roomService.save(room);
 		
-		return group;
+		return room;
 	}
 	
-	@DeleteMapping("/groups/{groupId}")
-	public String deleteGroup(@PathVariable int groupId) {
+	@DeleteMapping("/rooms/{roomId}")
+	public String deleteRoom(@PathVariable int roomId) {
 		
-		Group group = groupService.findById(groupId);
+		Room room = roomService.findById(roomId);
 		
-		if (group== null) {
+		if (room == null) {
 			throw new GroupNotFoundException("Group not found.");
 		}
 		
-		groupService.deleteById(groupId);
+		roomService.deleteById(roomId);
 		
-		return "Deleted group id: " + groupId;
+		return "Deleted group id: " + roomId;
 	}
 	
 	//@GetMapping("/groups/{groupId}/messages")

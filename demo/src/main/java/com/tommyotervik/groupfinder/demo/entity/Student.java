@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,6 +43,8 @@ public class Student {
 	
 	@Column(name="phonenumber")
 	private String phoneNumber;
+	
+	
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -77,6 +80,8 @@ public class Student {
 	
 	
 
+
+	
 
 	
 
